@@ -197,7 +197,7 @@ int main() {
 
     clock_t start = clock();
 
-    for(drone_height = 20; drone_height<=200; drone_height+=10){
+    for(drone_height = 50; drone_height<=200; drone_height+=10){
         string line;
         while (getline(file, line)) {
             stringstream ss(line); // Create a stringstream from the line
