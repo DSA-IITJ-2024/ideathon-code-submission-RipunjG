@@ -7,6 +7,7 @@
 #include <limits>
 #include <queue>
 #include <string>
+#include <time.h>
 
 using namespace std;
 
@@ -194,7 +195,9 @@ int main() {
     std::cout << "Enter goal node ID: ";
     cin >> goal_node_id;
 
-    for(drone_height = 50; drone_height<=200; drone_height+=10){
+    clock_t start = clock();
+
+    for(drone_height = 20; drone_height<=200; drone_height+=10){
         string line;
         while (getline(file, line)) {
             stringstream ss(line); // Create a stringstream from the line
@@ -243,18 +246,23 @@ int main() {
         }
     }
 
+    clock_t stop = clock();
+    double elasped = ((double) (stop - start))*1000 / CLOCKS_PER_SEC;
+
     file.close();
-    if(shortest_path.empty()){
-        std::cout << "No path found! Try increasing the connection range.";
+    if(shortest_path.empty() || min_distance == 999999999.0){
+        std::cout << "No path found! Try increasing the connection range."<< endl;
+        std::cout << "Total Time Taken = "<< elasped<<" ms"<< endl;
         return 0;
     }
-    std::cout << "\nShortest path Found!"<<endl<< "For Drone flying height = "<< drone_height_for_shortest_path<< endl;
-    std::cout << "Length of Shortest path = "<< min_distance<< endl;
+    std::cout << "\nShortest path Found!"<<endl<< "For Drone flying height = "<< drone_height_for_shortest_path<<" m"<< endl;
+    std::cout << "Length of Shortest path = "<< min_distance<<" m"<< endl;
     std::cout << "Shortest path: ";
     for (const string& node : shortest_path) {
         std::cout << node << " ";
     }
     std::cout << endl;
-    
+    std::cout << "Total Time Taken = "<< elasped<<" ms"<< endl;
+
     return 0;
 }
